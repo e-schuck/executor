@@ -1,0 +1,24 @@
+{
+  "auto_start": true,
+  "minimize_to_tray": true,
+  "commands": [
+    {
+      "name": "OmniRoute",
+      "command": "npx",
+      "args": "omniroute",
+      "workdir": "C:\\Users\\evandro",
+      "enabled": true,
+      "delay_seconds": 5,
+      "run_minimized": true
+    },
+    {
+      "name": "Qdrant",
+      "command": "D:\\Apps\\Qdrant\\qdrant.exe",
+      "args": "",
+      "workdir": "D:\\Apps\\Qdrant",
+      "enabled": true,
+      "delay_seconds": 0,
+      "run_minimized": false
+    }
+  ]
+}
