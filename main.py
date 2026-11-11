@@ -7,7 +7,7 @@ from tkinter import ttk, messagebox
 from typing import Any
 
 from config_manager import get_app_dir, load_config, save_config
-from launcher import launch_all, launch_command, setup_logging
+from launcher import launch_all, launch_command, restart_all, setup_logging, stop_all
 from tray_icon import TrayManager
 
 # ---------------------------------------------------------------------------
@@ -135,7 +135,12 @@ class StartupLauncherApp:
         self.app_dir = get_app_dir()
         setup_logging(self.app_dir)
         self.config = load_config()
-        self.tray = TrayManager(on_open=self._show_window, on_quit=self._quit)
+        self.tray = TrayManager(
+            on_open=self._show_window,
+            on_quit=self._quit,
+            on_restart_all=self._restart_all,
+            on_stop_all=self._stop_all,
+        )
 
         self.root = tk.Tk()
         self.root.title("Startup Launcher")
@@ -277,7 +282,16 @@ class StartupLauncherApp:
         self.root.deiconify()
         self.root.lift()
 
+    def _restart_all(self) -> None:
+        """Stop all managed processes and relaunch them respecting delays."""
+        restart_all(self.config.get("commands", []))
+
+    def _stop_all(self) -> None:
+        """Stop all managed processes without restarting."""
+        stop_all()
+
     def _quit(self) -> None:
+        stop_all()
         self.tray.stop()
         self.root.destroy()
 

@@ -6,6 +6,7 @@ Aplicativo Windows para configurar e gerenciar comandos executados automaticamen
 
 - **Interface gráfica** (tkinter) para adicionar, editar e remover comandos
 - **System tray** — roda em segundo plano após lançar os comandos configurados
+- **Menu do tray** com opções de reiniciar/encerrar processos, abrir painel e fechar o programa
 - **Auto-inicialização** — registre/desregistre o app no Registro do Windows com um clique
 - **Delay configurável** por comando (segundos)
 - **Execução minimizada** opcional por entrada
@@ -94,6 +95,19 @@ windows-startup-launcher/
 ├── requirements.txt     # Dependências Python
 └── README.md            # Este arquivo
 ```
+
+## Menu do System Tray
+
+Clique com o botão direito no ícone da bandeja para acessar:
+
+| Opção | Descrição |
+|---|---|
+| **Reiniciar todos os processos** | Encerra todos os processos gerenciados e os reinicia respeitando `delay_seconds` e `enabled` de cada entrada |
+| **Encerrar todos os processos** | Encerra todos os processos gerenciados sem reiniciá-los |
+| **Abrir painel** | Restaura a janela principal da interface gráfica (tkinter) |
+| **Fechar programa** | Encerra todos os processos, remove o ícone do tray e fecha o aplicativo completamente |
+
+Todas as ações são registradas em `startup_launcher.log`.
 
 ## Logs
 
