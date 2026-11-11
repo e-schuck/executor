@@ -24,12 +24,23 @@ if errorlevel 1 (
 REM Build executable
 echo.
 echo Building StartupLauncher.exe...
-pyinstaller --onefile --noconsole --name StartupLauncher --icon=app.ico main.py
+set PYINSTALLER_CMD=
+where pyinstaller >nul 2>&1 && set PYINSTALLER_CMD=pyinstaller || python -m PyInstaller --version >nul 2>&1 && set PYINSTALLER_CMD=python -m PyInstaller
+if "%PYINSTALLER_CMD%"=="" (
+    echo [ERROR] PyInstaller not found. Run: pip install pyinstaller
+    pause
+    exit /b 1
+)
+if exist app.ico (
+    %PYINSTALLER_CMD% --onefile --noconsole --name StartupLauncher --icon=app.ico main.py
+) else (
+    echo [INFO] app.ico not found, building without custom icon.
+    %PYINSTALLER_CMD% --onefile --noconsole --name StartupLauncher main.py
+)
 
 if errorlevel 1 (
     echo.
-    echo [WARN] Build completed with warnings or icon not found.
-    echo        Try without --icon if app.ico is missing.
+    echo [WARN] Build completed with warnings.
 )
 
 echo.
